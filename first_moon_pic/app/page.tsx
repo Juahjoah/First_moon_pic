@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
           <p> hi </p>
         </div>
+        <Analytics />
       </main>
     </div>
   );
