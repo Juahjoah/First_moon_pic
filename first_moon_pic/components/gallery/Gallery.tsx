@@ -2,31 +2,43 @@
 
 import Image from "next/image";
 import { photos } from "@/lib/photos";
+import type { CategoryId } from "@/lib/categories";
 
-const Gallery = () => {
-  const images = photos.fashion;
+interface GalleryProps {
+  category: CategoryId;
+}
+
+const Gallery = ({ category }: GalleryProps) => {
+  let images;
+
+  if (category === "all") {
+    images = Object.values(photos).flat();
+  } else {
+    images = photos[category];
+  }
 
   return (
-    <div className="w-full">
-      <h2 className="mb-4 text-2xl font-bold">Gallery</h2>
+    <section className="w-full">
+      <h2 className="mb-8 text-2xl font-bold">Gallery</h2>
 
-      <div className="flex gap-4 overflow-x-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {images.map((photo, index) => (
           <div
             key={index}
-            className="relative h-[400px] min-w-[300px] flex-shrink-0"
+            className="relative w-full aspect-[3/4] overflow-hidden bg-gray-200"
           >
             <Image
               src={photo.src}
               alt={photo.title}
               fill
               className="object-cover"
-              sizes="300px"
+              sizes="(min-width: 768px) 50vw, 100vw"
+              priority={index < 2}
             />
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
