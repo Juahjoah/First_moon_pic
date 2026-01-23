@@ -9,30 +9,40 @@ interface GalleryProps {
 }
 
 const Gallery = ({ category }: GalleryProps) => {
-  let images;
-
-  if (category === "all") {
-    images = Object.values(photos).flat();
-  } else {
-    images = photos[category];
-  }
+  const images =
+    category === "all" ? Object.values(photos).flat() : photos[category];
 
   return (
     <section className="w-full">
-      <h2 className="mb-8 text-2xl font-bold">Gallery</h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div
+        className="
+          grid
+          grid-cols-1
+          md:grid-cols-2
+          gap-4
+          md:gap-8
+        "
+      >
         {images.map((photo, index) => (
           <div
             key={index}
-            className="relative w-full aspect-[3/4] overflow-hidden bg-gray-200"
+            className="
+              relative
+              w-full
+              aspect-[4/5]
+              md:aspect-[3/4]
+              overflow-hidden
+            "
           >
             <Image
               src={photo.src}
               alt={photo.title}
               fill
               className="object-cover"
-              sizes="(min-width: 768px) 50vw, 100vw"
+              sizes="
+                (min-width: 768px) 50vw,
+                100vw
+              "
               priority={index < 2}
             />
           </div>

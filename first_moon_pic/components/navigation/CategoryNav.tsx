@@ -9,13 +9,20 @@ interface CategoryNavProps {
 
 const CategoryNav = ({ active, onChange }: CategoryNavProps) => {
   return (
-    <nav
-      className="
-        mb-12 w-full
-        overflow-x-auto no-scrollbar
-      "
-    >
-      <ul className="mx-auto flex min-w-max justify-center gap-3 px-4">
+    <nav className="mb-8 w-full">
+      <ul
+        className="
+          mx-auto
+          flex
+          flex-wrap
+          justify-center
+          gap-2
+          sm:gap-3
+
+          max-w-3xl
+          px-4
+        "
+      >
         {categories.map((category) => {
           const isActive = active === category.id;
 
@@ -24,20 +31,29 @@ const CategoryNav = ({ active, onChange }: CategoryNavProps) => {
               <button
                 type="button"
                 onClick={() => onChange(category.id)}
+                aria-current={isActive ? "true" : undefined}
+                title={category.description}
                 className={`
-                  relative px-6 py-2.5 rounded-full
-                  text-[10px] md:text-xs
-                  uppercase tracking-widest
-                  transition-all duration-500
+                  relative
+                  rounded-full
                   border
+                  transition-all duration-300
+
+                  px-4 py-2
+                  sm:px-5 sm:py-2.5
+
+                  text-[0.7rem] sm:text-xs
+                  uppercase font-medium
+
+                  tracking-[0.15em]
+                  sm:tracking-[0.25em]
+
                   ${
                     isActive
-                      ? "bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                      ? "bg-white text-black border-white shadow-[0_0_16px_rgba(255,255,255,0.25)]"
                       : "text-slate-500 border-white/5 hover:border-white/20 hover:text-slate-200"
                   }
                 `}
-                aria-current={isActive ? "true" : undefined}
-                title={category.description}
               >
                 {category.label}
               </button>
