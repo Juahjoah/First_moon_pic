@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { photos } from "@/lib/photos";
 import type { CategoryId } from "@/lib/categories";
+import { motion } from "framer-motion";
 
 interface GalleryProps {
   category: CategoryId;
@@ -24,8 +25,16 @@ const Gallery = ({ category }: GalleryProps) => {
         "
       >
         {images.map((photo, index) => (
-          <div
+          <motion.div
             key={index}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{
+              duration: 0.6,
+              ease: "easeOut",
+              delay: index * 0.06,
+            }}
             className="
               relative
               w-full
@@ -43,9 +52,8 @@ const Gallery = ({ category }: GalleryProps) => {
                 (min-width: 768px) 50vw,
                 100vw
               "
-              priority={index < 2}
             />
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
