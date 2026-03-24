@@ -56,6 +56,25 @@ const Gallery = ({ category }: GalleryProps) => {
           </motion.div>
         ))}
       </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            itemListElement: Object.values(photos)
+              .flat()
+              .map((photo, index) => ({
+                "@type": "ImageObject",
+                position: index + 1,
+                contentUrl: `https://www.firstmoonpic.co.kr${photo.src}`,
+                name: photo.title,
+                description: photo.description,
+              })),
+          }),
+        }}
+      />
     </section>
   );
 };
