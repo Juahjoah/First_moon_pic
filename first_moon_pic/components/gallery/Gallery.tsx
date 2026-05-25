@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { photos } from "@/lib/photos";
 import type { CategoryId } from "@/lib/categories";
@@ -10,8 +11,18 @@ interface GalleryProps {
 }
 
 const Gallery = ({ category }: GalleryProps) => {
-  const images =
-    category === "all" ? Object.values(photos).flat() : photos[category];
+  const [shuffledImages, setShuffledImages] = useState<
+    (typeof photos)[keyof typeof photos][number][]
+  >([]);
+
+  useEffect(() => {
+    const images =
+      category === "all" ? Object.values(photos).flat() : photos[category];
+
+    const shuffled = [...images].sort(() => Math.random() - 0.5);
+
+    setShuffledImages(shuffled);
+  }, [category]);
 
   return (
     <section className="w-full">
@@ -24,9 +35,9 @@ const Gallery = ({ category }: GalleryProps) => {
           md:gap-8
         "
       >
-        {images.map((photo, index) => (
+        {shuffledImages.map((photo, index) => (
           <motion.div
-            key={index}
+            key={`${photo.src}-${index}`}
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
